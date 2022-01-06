@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Sample API
+  description: >-
+    A sample API that uses a sample-site as an example to demonstrate features in
+    the OpenAPI 3.0 specification
+servers:
+  - url: 'http://localhost:8003'
+paths:
+  /users/{user_id}:
+    get:
+      tags: [user]
+      description: ユーザーの情報を取得する
+      parameters:
+        - in: path
+          name: user_id
+          description: user id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users:
+    get:
+      tags: [user]
+      description: ユーザーの一覧を取得する
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /users/me:
+    get:
+      tags: [user]
+      description: ログイン中のユーザー情報を取得する
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - family_name
+        - given_name
+        - email
+      properties:
+        id:
+          type: integer
+          example: 1
+        family_name:
+          type: string
+          example: 田中
+          maxLength: 255
+        given_name:
+          type: string
+          example: 太郎
+          maxLength: 255
+        email:
+          example: hoge@example.com
+          type: string
+          maxLength: 255
