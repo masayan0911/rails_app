@@ -2,15 +2,14 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: Sample API
-  description: >-
-    A sample API that uses a sample-site as an example to demonstrate features in
-    the OpenAPI 3.0 specification
+  description: A sample API that uses a sample-site as an example to demonstrate features in the OpenAPI 3.0 specification
 servers:
   - url: 'http://localhost:8003'
 paths:
-  /users/{user_id}:
+  '/users/{user_id}':
     get:
-      tags: [user]
+      tags:
+        - user
       description: ユーザーの情報を取得する
       parameters:
         - in: path
@@ -20,7 +19,7 @@ paths:
           schema:
             type: integer
       responses:
-        200:
+        '200':
           description: ok
           content:
             application/json:
@@ -28,10 +27,11 @@ paths:
                 $ref: '#/components/schemas/User'
   /users:
     get:
-      tags: [user]
+      tags:
+        - user
       description: ユーザーの一覧を取得する
       responses:
-        200:
+        '200':
           description: ok
           content:
             application/json:
@@ -41,25 +41,20 @@ paths:
                   $ref: '#/components/schemas/User'
   /users/me:
     get:
-      tags: [user]
+      tags:
+        - user
       description: ログイン中のユーザー情報を取得する
       responses:
-        200:
+        '200':
           description: ok
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-
 components:
   schemas:
     User:
       type: object
-      required:
-        - id
-        - family_name
-        - given_name
-        - email
       properties:
         id:
           type: integer
@@ -76,3 +71,13 @@ components:
           example: hoge@example.com
           type: string
           maxLength: 255
+        nick_name:
+          type: string
+          maxLength: 255
+          example: たなか
+      required:
+        - id
+        - family_name
+        - given_name
+        - email
+        - nick_name
